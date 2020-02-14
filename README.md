@@ -5,3 +5,4 @@
 #### another aspect of her works is the presence of "the other" - this concept draw through her so called "musicstallations" - i am suspicious if this "other" shows in any features (maybe compared to other contemporary composers like Adriana Hölszky or Luigi Nono, whom kind of inspires her)
 
 ![Comparison of the Valence of two compositions](valence.png)
+![Comparison of the Valence of two compositions](energy.png)
