@@ -6,3 +6,4 @@
 
 ![Comparison of the Valence of two compositions](valence.png)
 ![Comparison of the Valence of two compositions](energy.png)
+![Comparison of the Valence of two compositions](losthighway.png)
