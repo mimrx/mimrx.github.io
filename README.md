@@ -6,4 +6,6 @@
 
 ![Comparison of the Valence of two compositions](valence.png)
 ![Comparison of the Valence of two compositions](energy.png)
+
+#### i compared the playlist of her work of *lost highway* with a playlist based on the film music of *lost highway* by david lynch - i also focused on the valence of the songs which are used/composed for each work
 ![Comparison of the Valence of two compositions](losthighway.png)
