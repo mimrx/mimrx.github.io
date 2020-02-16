@@ -5,9 +5,11 @@
 #### so for this i wanna take a look at the features of all her works i can find on spotify and how these matches her personality (especially focused on valence, energy and loudness) - futhermore i wanna compare her own works with each other and - last but not least - her work *lost highway* (which is based on the film *lost highway* by david lynch) with a playlist based on the film music of *lost highway* by david lynch - here i wanna see how the valence and energy was changed by her compared to the "original" - so i analyse how works that already exists are changed by her with her own character
 
 ![Comparison of the Valence of two compositions](valence.png)
-#### these are two compositions from her compared in valence and energy
+#### these are two compositions from her compared in valence and energy:
 ![Comparison of the Valence of two compositions](energy.png)
 #### -> this shows the aspect of the depression in her compositions very clear
 
-#### i compared the playlist of her work of *lost highway* with a playlist based on the film music of *lost highway* by david lynch - i also focused on the valence of the songs which are used/composed for each work
+
+#### i also compared the playlist of her work of *lost highway* with a playlist based on the film music of *lost highway* by david lynch - i also focused on the valence of the songs which are used/composed for each work
 ![Comparison of the Valence of two compositions](losthighway.png)
+#### -> this shows how she give her personal character to a work that already exists
