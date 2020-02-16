@@ -12,4 +12,4 @@
 
 #### i also compared the playlist of her work of *lost highway* with a playlist based on the film music of *lost highway* by david lynch - i also focused on the valence of the songs which are used/composed for each work
 ![Comparison of the Valence of two compositions](losthighway.png)
-#### -> this shows how she give her personal character to a work that already exists
+#### -> this shows how she add her personal character to a work that already exists
