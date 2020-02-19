@@ -32,3 +32,4 @@ library(spotifyr)
 ![Comparison of the Valence of two compositions](losthighway.png)
 #### -> this shows how she add her personal character to a work that already exists
 
+
