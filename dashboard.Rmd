@@ -27,7 +27,6 @@ library(spotifyr)
 
  -> this shows the aspect of the depression in her compositions very clear
 
-***
 #### i also compared the playlist of her work of *lost highway* with a playlist based on the film music of *lost highway* by david lynch - i also focused on the valence of the songs which are used/composed for each work
 
 ![Comparison of the Valence of two compositions](losthighway.png)
@@ -35,7 +34,7 @@ library(spotifyr)
  
  -> this shows how she add her personal character to a work that already exists
 
-### a conclusion of her music and personality
+### her music linked to her personality
 
 #### the comparison between her works shows that her music is very depressed - compared to the original music of lost highway by david lynch this aspect shows clearly - her interpretation of the music of lost highway has a much lower valence and energy
 
