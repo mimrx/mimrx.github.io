@@ -34,7 +34,7 @@ library(spotifyr)
  
  -> this shows how she add her personal character to a work that already exists
 
-### her music linked to her personality
+### her music is linked to her personality
 
 #### the comparison between her works shows that her music is very depressed - compared to the original music of lost highway by david lynch this aspect shows clearly - her interpretation of the music of lost highway has a much lower valence and energy
 
