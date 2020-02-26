@@ -37,25 +37,6 @@ Furthermore I want to compare her own works with each other and - last but not l
 
 ### The mood of her music
 
-#### **So here are the same plots not interactive for now**
-
-#### Overview of the valence and energy of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway*
-
-![Comparison of the Valence of two compositions](violin.png)
-
-#### **-> This overview shows that the music Olga Neuwirth composes is very low in valence which matches the aspect of her depressed personality**
- 
-
-
-#### Comparison between the playlist of her work of *Lost Highway* and a playlist based on the film music of *Lost Highway* by David Lynch - the focus is also on the valence of the songs which are used/composed for each work
-
-![Comparison of the Valence of two compositions](losthighway.png)
-
- 
-#### **-> This shows how she adds her personal character to a work that already exists**
-
-### The mood of her music (interactive)
-
 ```{r}
 bählammsfest <- get_playlist_audio_features('applejackey', '0S7AN9KBAM2uBorb7p5okC')
 losthighway <- get_playlist_audio_features('applejackey', '0rpE8eKsaal3ovP4TAYNgZ')
@@ -68,11 +49,33 @@ sad <- compositions %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% g
 
 ggplotly(sad)
 ```
- 
+
 ***
+
 Overview of the valence and energy of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway*
 
 This overview shows that the music Olga Neuwirth composes is very low in valence which matches the aspect of her depressed personality
+
+### Lost Highway - comparison to "the original"
+
+```{r}
+losthighway <- get_playlist_audio_features('applejackey', '0rpE8eKsaal3ovP4TAYNgZ')
+losthighwaylynch <- get_playlist_audio_features('applejackey', '48trfaA2jPoNdOgctI02Jc')
+
+comparison <-
+losthighway %>% mutate(playlist = "LostHighway") %>%
+bind_rows(losthighwaylynch %>% mutate(playlist = "LostHighwayLynch"))
+
+compare <- comparison %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = energy, y = valence, colour = mode, label = track.name)) + geom_point(alpha = 0.6) + facet_wrap( ~ playlist_name)
+
+ggplotly(compare)
+```
+
+***
+
+Comparison between the playlist of her work of *Lost Highway* and a playlist based on the film music of *Lost Highway* by David Lynch - the focus is also on the valence of the songs which are used/composed for each work.
+
+This shows how she adds her personal character to a work that already exists. The valence is much more lower in her work.
 
 ### The song with the lowest valence in *Lost Highway* (mode = 1, key = 8)
 
