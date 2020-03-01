@@ -34,8 +34,24 @@ Furthermore I want to compare her own works with each other and - last but not l
 * how matches her music her personality?
     + does she show her depression in her music? -> which features show this?
     + does she show her strong determined character in her music? -> which features show this?
-
+    
 ### The mood of her music
+
+```{r}
+olganeuwirth <- get_playlist_audio_features('applejackey', '3ct4SKi3r2IvsMnPYorsSN')
+
+olganeuwirth %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = energy, y = valence, colour = mode)) + geom_point(alpha = 0.6) + theme_classic()
+
+general <- olganeuwirth %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = energy, y = valence, colour = mode, label = track.name)) + geom_point(alpha = 0.6) + theme_classic()
+
+ggplotly(general)
+```
+
+***
+
+This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. It shows very clear that her music in general has a very low valence - with a few exceptions. This matches the aspect of her depressed personality. The song with the highest valence is ironically from her composition *the death and the girl II*. 
+
+### What is "happy" for her is "depressed" for others
 
 ```{r}
 bählammsfest <- get_playlist_audio_features('applejackey', '0S7AN9KBAM2uBorb7p5okC')
@@ -45,16 +61,14 @@ compositions <-
 bählammsfest %>% mutate(playlist = "BählammsFest") %>%
 bind_rows(losthighway %>% mutate(playlist = "LostHighway"))
 
-sad <- compositions %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = energy, y = valence, colour = mode, label = track.name)) + geom_point(alpha = 0.6) + facet_wrap( ~ playlist_name)
+sad <- compositions %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = energy, y = valence, colour = mode, label = track.name)) + geom_point(alpha = 0.6) + facet_wrap( ~ playlist_name) + theme_minimal()
 
 ggplotly(sad)
 ```
 
 ***
 
-Overview of the valence and energy of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway*
-
-This overview shows that the music Olga Neuwirth composes is very low in valence which matches the aspect of her depressed personality
+Comparison of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway* in valence and energy. It shows that *Lost Highway* is "much more" happier than *Bählamms Fest* (and her music in general - compare "The modd of her music"). This could be because *Lost Highway* is based on a Film with a story that already existed. So she "had to obey some rules" for this composition. That she nonetheless put her character in this composition shows the comparison between her composed music for *Lost Highway* and the used music in the film *Lost Highway* by David Lynch (see "Lost Highway - comparison to "the original"")
 
 ### Lost Highway - comparison to "the original"
 
@@ -66,7 +80,7 @@ comparison <-
 losthighway %>% mutate(playlist = "LostHighway") %>%
 bind_rows(losthighwaylynch %>% mutate(playlist = "LostHighwayLynch"))
 
-compare <- comparison %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = energy, y = valence, colour = mode, label = track.name)) + geom_point(alpha = 0.6) + facet_wrap( ~ playlist_name)
+compare <- comparison %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = energy, y = valence, colour = mode, label = track.name)) + geom_point(alpha = 0.6) + facet_wrap( ~ playlist_name) + theme_minimal()
 
 ggplotly(compare)
 ```
