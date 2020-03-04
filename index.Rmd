@@ -104,8 +104,13 @@ key_templates <-
 ```{r}
 scene6 <- 
     get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
-    select(segments) %>% unnest(segments) %>% 
-    select(start, duration, pitches)
+    compmus_align(sections, segments) %>% 
+    select(sections) %>% unnest(sections) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'))
 
 scene6 %>% 
     compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
@@ -116,6 +121,13 @@ scene6 %>%
     theme_minimal() +
     labs(x = 'Time (s)', y = '')
 ```
+
+
+***
+
+This is a keygram of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
+
+This clearly shows that something happens in the song at ~50 sec. and ~130 sec. (for me to do: listen to the song and look what happens)
 
 ### Cepstogram
 
