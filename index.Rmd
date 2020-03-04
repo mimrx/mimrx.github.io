@@ -20,8 +20,8 @@ library(spotifyr)
 ```{r}
 scene6 <- 
     get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
-    compmus_align(bars, segments) %>% 
-    select(bars) %>% unnest(bars) %>% 
+    compmus_align(beats, segments) %>% 
+    select(beats) %>% unnest(beats) %>% 
     mutate(
         pitches = 
             map(segments, 
