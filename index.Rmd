@@ -129,90 +129,6 @@ This is a keygram of the song with the lowest valence from Olga Neuwirths compos
 
 This clearly shows that something happens in the song at ~50 sec. and ~130 sec. (for me to do: listen to the song and look what happens)
 
-### Cepstogram
-
-```{r}
-scene6 <- 
-    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
-    compmus_align(beats, segments) %>% 
-    select(beats) %>% unnest(beats) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'rms', norm = 'euclidean'))
-```
-
-```{r}
-scene6 %>% 
-    compmus_gather_timbre %>% 
-    ggplot(
-        aes(
-            x = start + duration / 2, 
-            width = duration, 
-            y = basis, 
-            fill = value)) + 
-    geom_tile() +
-    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
-    scale_fill_viridis_c(option = 'E') +
-    theme_classic()
-```
-
-***
-
-This is a cepstogram of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
-
-Is there a possibility to put this, the self similarity matrice and the chromagram on one tab? I wanted to add this cepstogramm to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
-
-### Self similarity matrice
-
-```{r}
-scene6 <- 
-    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
-    compmus_align(bars, segments) %>% 
-    select(bars) %>% unnest(bars) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'rms', norm = 'euclidean'))
-```
-
-```{r}
-song <- scene6 %>% 
-    compmus_self_similarity(timbre, 'cosine') %>% 
-    ggplot(
-        aes(
-            x = xstart + xduration / 2, 
-            width = xduration,
-            y = ystart + yduration / 2,
-            height = yduration,
-            fill = d)) + 
-    geom_tile() +
-    coord_fixed() +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_classic() +
-    labs(x = '', y = '')
-
-ggplotly(song)
-```
-
-***
-
-This is a self-similarity matrice of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
-
-Is there a possibility to put this, the cepstogram and the chromagram on one tab? I  wanted to add this self similarity matrice to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
-
 ### May I introduce to you: Olga Neuwirth
 Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
 
@@ -316,6 +232,90 @@ scene6 %>%
 ***
 
 This song has the mode = 1 (so it is a song in major) and the key = 8 (so it is a song in g). It is also visible in the chromagram - but it is interesting that there are several highlighted spots in the chromagram which more or less are far away from the major g chord.
+
+### Cepstogram
+
+```{r}
+scene6 <- 
+    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
+    compmus_align(beats, segments) %>% 
+    select(beats) %>% unnest(beats) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'rms', norm = 'euclidean')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'rms', norm = 'euclidean'))
+```
+
+```{r}
+scene6 %>% 
+    compmus_gather_timbre %>% 
+    ggplot(
+        aes(
+            x = start + duration / 2, 
+            width = duration, 
+            y = basis, 
+            fill = value)) + 
+    geom_tile() +
+    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
+    scale_fill_viridis_c(option = 'E') +
+    theme_classic()
+```
+
+***
+
+This is a cepstogram of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
+
+Is there a possibility to put this, the self similarity matrice and the chromagram on one tab? I wanted to add this cepstogramm to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
+
+### Self similarity matrice
+
+```{r}
+scene6 <- 
+    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'rms', norm = 'euclidean')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'rms', norm = 'euclidean'))
+```
+
+```{r}
+song <- scene6 %>% 
+    compmus_self_similarity(timbre, 'cosine') %>% 
+    ggplot(
+        aes(
+            x = xstart + xduration / 2, 
+            width = xduration,
+            y = ystart + yduration / 2,
+            height = yduration,
+            fill = d)) + 
+    geom_tile() +
+    coord_fixed() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_classic() +
+    labs(x = '', y = '')
+
+ggplotly(song)
+```
+
+***
+
+This is a self-similarity matrice of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
+
+Is there a possibility to put this, the cepstogram and the chromagram on one tab? I  wanted to add this self similarity matrice to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
 
 ### Personality = Music?
 
