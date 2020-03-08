@@ -15,7 +15,147 @@ library(compmus)
 library(spotifyr)
 ```
 
-### Keygram
+### The mood of her music in keygrams (the happiest vs. the saddest)
+
+```{r}
+circshift <- function(v, n) {if (n == 0) v else c(tail(v, n), head(v, -n))}
+                                    
+    # C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B 
+major_chord <- 
+    c(1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    0,    0)
+minor_chord <- 
+    c(1,    0,    0,    1,    0,    0,    0,    1,    0,    0,    0,    0)
+seventh_chord <- 
+    c(1,    0,    0,    0,    1,    0,    0,    1,    0,    0,    1,    0)
+
+major_key <- 
+    c(6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88)
+minor_key <-
+    c(6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17)
+
+chord_templates <-
+    tribble(
+        ~name  , ~template,
+        'Gb:7'  , circshift(seventh_chord,  6),
+        'Gb:maj', circshift(major_chord,    6),
+        'Bb:min', circshift(minor_chord,   10),
+        'Db:maj', circshift(major_chord,    1),
+        'F:min' , circshift(minor_chord,    5),
+        'Ab:7'  , circshift(seventh_chord,  8),
+        'Ab:maj', circshift(major_chord,    8),
+        'C:min' , circshift(minor_chord,    0),
+        'Eb:7'  , circshift(seventh_chord,  3),
+        'Eb:maj', circshift(major_chord,    3),
+        'G:min' , circshift(minor_chord,    7),
+        'Bb:7'  , circshift(seventh_chord, 10),
+        'Bb:maj', circshift(major_chord,   10),
+        'D:min' , circshift(minor_chord,    2),
+        'F:7'   , circshift(seventh_chord,  5),
+        'F:maj' , circshift(major_chord,    5),
+        'A:min' , circshift(minor_chord,    9),
+        'C:7'   , circshift(seventh_chord,  0),
+        'C:maj' , circshift(major_chord,    0),
+        'E:min' , circshift(minor_chord,    4),
+        'G:7'   , circshift(seventh_chord,  7),
+        'G:maj' , circshift(major_chord,    7),
+        'B:min' , circshift(minor_chord,   11),
+        'D:7'   , circshift(seventh_chord,  2),
+        'D:maj' , circshift(major_chord,    2),
+        'F#:min', circshift(minor_chord,    6),
+        'A:7'   , circshift(seventh_chord,  9),
+        'A:maj' , circshift(major_chord,    9),
+        'C#:min', circshift(minor_chord,    1),
+        'E:7'   , circshift(seventh_chord,  4),
+        'E:maj' , circshift(major_chord,    4),
+        'G#:min', circshift(minor_chord,    8),
+        'B:7'   , circshift(seventh_chord, 11),
+        'B:maj' , circshift(major_chord,   11),
+        'D#:min', circshift(minor_chord,    3))
+
+key_templates <-
+    tribble(
+        ~name    , ~template,
+        'Gb:maj', circshift(major_key,  6),
+        'Bb:min', circshift(minor_key, 10),
+        'Db:maj', circshift(major_key,  1),
+        'F:min' , circshift(minor_key,  5),
+        'Ab:maj', circshift(major_key,  8),
+        'C:min' , circshift(minor_key,  0),
+        'Eb:maj', circshift(major_key,  3),
+        'G:min' , circshift(minor_key,  7),
+        'Bb:maj', circshift(major_key, 10),
+        'D:min' , circshift(minor_key,  2),
+        'F:maj' , circshift(major_key,  5),
+        'A:min' , circshift(minor_key,  9),
+        'C:maj' , circshift(major_key,  0),
+        'E:min' , circshift(minor_key,  4),
+        'G:maj' , circshift(major_key,  7),
+        'B:min' , circshift(minor_key, 11),
+        'D:maj' , circshift(major_key,  2),
+        'F#:min', circshift(minor_key,  6),
+        'A:maj' , circshift(major_key,  9),
+        'C#:min', circshift(minor_key,  1),
+        'E:maj' , circshift(major_key,  4),
+        'G#:min', circshift(minor_key,  8),
+        'B:maj' , circshift(major_key, 11),
+        'D#:min', circshift(minor_key,  3))
+```
+
+```{r}
+happy <- 
+    get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK') %>% 
+    compmus_align(sections, segments) %>% 
+    select(sections) %>% unnest(sections) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'))
+
+happy %>% 
+    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
+    ggplot(
+        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
+    geom_tile() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_minimal() +
+    labs(x = 'Time (s)', y = '')
+
+sad <- 
+    get_tidy_audio_analysis('0ol6vgtY8Wapli7sr663QQ') %>% 
+    compmus_align(sections, segments) %>% 
+    select(sections) %>% unnest(sections) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'mean', norm = 'manhattan'))
+
+sad %>% 
+    compmus_match_pitch_template(key_templates, 'euclidean', 'manhattan') %>% 
+    ggplot(
+        aes(x = start + duration / 2, width = duration, y = name, fill = d)) +
+    geom_tile() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_minimal() +
+    labs(x = 'Time (s)', y = '')
+```
+
+***
+
+These two keygrams show the outlier of her music, the song with the highest valence, and the song with the lowest valence which is not an outlier because almost every song has such a low valence.
+Both songs are from the composition *the death and the girl II*.
+Only by looking at the keygrams (without any background information) it is clear that these two songs could be pretty much the opposite of each other.
+
+The first keygram shows the "happiest" song with a valence of ~0.6890 (mode = 1, key = 1). (Scene 11 of *the death and the girl II*)
+In this song you hear the entire time a computational voice which speaks over the instruments. I guess that this is why almost the whole keygram is highlighted. I think the voice makes it hard to determine the key. At the dark spot the voice is not speaking.
+
+The second keygram shows the "saddest" song with a valence of ~0.0202 (mode = 1, key = 0). (Scene 15 of *the death and the girl II* )
+The highlighted spots show that there is almost no key. In this sections ypo only hear a high "out of space" tone (it is hard to describe). When the tone in the song gets lower/darker, the keygram gets darker as well.
+
+The "happiest" song is composed in major and the "saddest" in minor which is as "determined thing in music theory" that major sounds happy and minor sounds sad. I would had expected that her "happiest" song is in minor so the depressed aspect in her music would not only be present in the title (see "The mood of her music") but also in the key. But I guess that in this case the valence would be lower analyzed by Spotifyr (?).
+
+### Keygram (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
 
 ```{r}
 circshift <- function(v, n) {if (n == 0) v else c(tail(v, n), head(v, -n))}
@@ -127,7 +267,7 @@ scene6 %>%
 
 This is a keygram of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
 
-This clearly shows that something happens in the song at ~50 sec. and ~130 sec. (for me to do: listen to the song and look what happens)
+This clearly shows that something happens in the song at ~50 sec. and ~130 sec. In this parts the song almost have no key. This is because in this sections there is only a voice to hear which holds one single tone (almost no instruments). So I guess that this is not enough to identify a key.
 
 ### May I introduce to you: Olga Neuwirth
 Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
@@ -162,7 +302,9 @@ ggplotly(general)
 
 ***
 
-This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. It shows very clear that her music in general has a very low valence - with a few exceptions. This matches the aspect of her depressed personality. The song with the highest valence is ironically from her composition *the death and the girl II*. 
+This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. It shows very clear that her music in general has a very low valence - with a few exceptions. This matches the aspect of her depressed personality. 
+As this plot shows there is an outlier song with a very high valence - this song is ironically from her composition *the death and the girl II*. Although this song has a high valence the "sadness" is represented in the title. So it does not matter if a song of her is "happy" or not, the depressed mood is always present in a way.
+The song with lowest valence of all of her songs is also from the composition *the death and the girl II* - so this composition has the highest valence distance.
 
 ### What is "happy" for her is "depressed" for others
 
@@ -205,7 +347,7 @@ Comparison between the playlist of her work of *Lost Highway* and a playlist bas
 
 This shows how she adds her personal character to a work that already exists. The valence is much more lower in her work.
 
-### The song with the lowest valence in *Lost Highway* (mode = 1, key = 8)
+### Chromagram (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
 
 ```{r}
 scene6 <- 
@@ -233,7 +375,7 @@ scene6 %>%
 
 This song has the mode = 1 (so it is a song in major) and the key = 8 (so it is a song in g). It is also visible in the chromagram - but it is interesting that there are several highlighted spots in the chromagram which more or less are far away from the major g chord.
 
-### Cepstogram
+### Cepstogram (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
 
 ```{r}
 scene6 <- 
@@ -273,7 +415,7 @@ This is a cepstogram of the song with the lowest valence from Olga Neuwirths com
 
 Is there a possibility to put this, the self similarity matrice and the chromagram on one tab? I wanted to add this cepstogramm to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
 
-### Self similarity matrice
+### Self similarity matrice (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
 
 ```{r}
 scene6 <- 
@@ -323,3 +465,9 @@ After a first look at Olga Neuwirths compositions with a focus on the energy and
 
 But the depression is not the only strong aspect of her personality. She also is a very determined character which I also want to search in her music. For this aspect I have to take a look at other compositions and features to search for features which could represent the other aspects of her personality - this will be my next step! And with this I analyze and summarize her music in general and give it an own summarized character/personality.
 
+#### To Do
+*   analyze her music on other features which could represent other             aspects of her personality
+*   plot the mean character of her music in general
+        + give this an own character/personality?
+            + compare this with her personality
+*   try to get tables for the descriptions in the columns
