@@ -39,7 +39,7 @@ happy %>%
 ```
 
 ***
-Tempograms of the happiest (left side) and saddest (right side) of all her compared songs (I found on Spotify).
+Tempograms of the happiest and saddest of all her composed songs (I found on Spotify).
 
 ### Novelty function (happiest vs. saddest song of all her music)
 
@@ -72,7 +72,7 @@ Tempograms of the happiest (left side) and saddest (right side) of all her compa
 ```
 
 ***
-Novelty function of the happiest (left side) and saddest (right side) of all her compared songs (I found on Spotify).
+Novelty function of the happiest and saddest of all her composed songs (I found on Spotify).
 
 ### May I introduce to you: Olga Neuwirth
 Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
