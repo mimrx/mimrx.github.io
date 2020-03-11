@@ -36,6 +36,16 @@ happy %>%
      scale_fill_viridis_c(guide = 'none') +
      labs(x = 'Time (s)', y = 'Tempo (BPM)') +
      theme_classic()
+ 
+ scene6 <- get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH')
+
+ scene6 %>% 
+     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
+     ggplot(aes(x = time, y = bpm, fill = power)) + 
+     geom_raster() + 
+     scale_fill_viridis_c(guide = 'none') +
+     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
+     theme_classic()
 ```
 
 ***
