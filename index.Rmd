@@ -15,7 +15,7 @@ library(compmus)
 library(spotifyr)
 ```
 
-### Tempogram (happiest vs. saddest song of all her music)
+### Tempogram - happy, sad & something inbetween
 
 ```{r}
 happy <- get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK')
@@ -49,7 +49,12 @@ happy %>%
 ```
 
 ***
-Tempograms of the happiest and saddest of all her composed songs (I found on Spotify).
+
+These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing about what it should be say about the songs. Otherwise it is interisting to see how the tempograms try to handle this. 
+
+The last tempogram (with the song from *Lost Highway*) is chaotic as the other two song but around 150 sec. the tempo gets clear for a moment. This is because this is the only part of the song where are clear instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
+
+(Look at the Tab "Comparison of Chroma, Cepsto- and Tempogram" where I compared these three -grams with each other for a closer look at this song)
 
 ### Novelty function (happiest vs. saddest song of all her music)
 
@@ -82,7 +87,75 @@ Tempograms of the happiest and saddest of all her composed songs (I found on Spo
 ```
 
 ***
-Novelty function of the happiest and saddest of all her composed songs (I found on Spotify).
+
+Novelty function of 1. the happiest and 2. the saddest of all her composed songs (I found on Spotify). You can clearly see the difference of these two songs which are, focused on valence, the most different songs compared to each other.
+
+### Comparison of Chroma-, Cepsto- & Tempogram
+
+```{r}
+
+scene6 <- 
+    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
+    select(segments) %>% unnest(segments) %>% 
+    select(start, duration, pitches)
+
+scene6 %>% 
+    mutate(pitches = map(pitches, compmus_normalise, 'euclidean')) %>% 
+    compmus_gather_chroma %>% 
+    ggplot(
+        aes(
+            x = start + duration / 2, 
+            width = duration, 
+            y = pitch_class, 
+            fill = value)) + 
+    geom_tile() +
+    labs(x = 'time (s)', y = NULL, fill = 'magnitude') +
+    theme_minimal()
+
+scene6 <- 
+    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
+    compmus_align(beats, segments) %>% 
+    select(beats) %>% unnest(beats) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'rms', norm = 'euclidean')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'rms', norm = 'euclidean'))
+
+scene6 %>% 
+    compmus_gather_timbre %>% 
+    ggplot(
+        aes(
+            x = start + duration / 2, 
+            width = duration, 
+            y = basis, 
+            fill = value)) + 
+    geom_tile() +
+    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
+    scale_fill_viridis_c(option = 'E') +
+    theme_classic()
+
+ scene6 <- get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH')
+
+ scene6 %>% 
+     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
+     ggplot(aes(x = time, y = bpm, fill = power)) + 
+     geom_raster() + 
+     scale_fill_viridis_c(guide = 'none') +
+     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
+     theme_classic()
+```
+
+***
+
+This is a comparison of the Chroma-, Cepsto- & Tempogram of the song with the lowest valence of the composition *Lost Highway* from Olga Neuwirth.
+
+These clearly show that the part around 150 sec. is different from the rest of the song. This is because these ~30 seconds are the only part where "clear" instrument sounds are used without a voice speaking over them. The rest of the song are kinda "out of space" noises and sound which the -grams cannot handle properly (see "Tempograms - happy, sad & something inbetween")
 
 ### May I introduce to you: Olga Neuwirth
 Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
