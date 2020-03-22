@@ -15,13 +15,19 @@ library(compmus)
 library(spotifyr)
 ```
 
-### Mosaic Confusion Matrix
+### Relationship of three compositions
 
 ![Mosaic](mosaic.png)
+![Instrumental](instrumentalness.png)
+![Live](liveness.png)
 
 ***
 
- This mosaic confusion matrix shows the relation between three compositions of Olga Neuwirth.
+The Relationship between three of Olga Neuwirths compositions - Bählamms Fest, Lost Highway and The death and the girl II.
+
+It is interesting to see that for the instrumentalness there is either a huge instrumentalness (0.75) or none (0.00). There is almost no inbetween. But regarding to the fact that these are all songs from "operas" (she does not call her works opera but she has for almost every of her works a different "genre name") it is not surprisingly. Either there is someone singing/talking during a scene or there is only music/sounds/noises during for example a scene that could be interpreted as an interlude or something similar.
+
+For the liveness I have guessed that every song has to be in the range at least more than 0.5 because every composition I choosed (and I guess that is on Spotify anyways) is a recording from a live performance. So it surprised me that many songs not only from one but from all three compositions are analyzed with a very low liveness.
 
 ### May I introduce to you: Olga Neuwirth
 Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
@@ -545,12 +551,13 @@ ggplotly(general2)
 
 ***
 
-This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. This time with a focus on loud- & speechiness. It shows that her music in general is not that speechy but loud. 
+This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. This time with a focus on loud- & speechiness. It shows that her music in general is not that speechy but loud.
+For this to be musicstallations, video operas etc. I thought that the speechiness would be higher.
 (See "The progression of the voice")
 
 ### The progression of the voice
 
-
+Def. goodbye mommy analysieren
  
 ### Personality = Music?
 
