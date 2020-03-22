@@ -15,147 +15,17 @@ library(compmus)
 library(spotifyr)
 ```
 
-### Tempogram - happy, sad & something inbetween
+### Mosaic Confusion Matrix
 
-```{r}
-happy <- get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK')
+![Mosaic](mosaic.png)
 
-happy %>% 
-    tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
-    ggplot(aes(x = time, y = bpm, fill = power)) + 
-    geom_raster() + 
-    scale_fill_viridis_c(guide = 'none') +
-    labs(x = 'Time (s)', y = 'Tempo (BPM)') +
-    theme_classic()
+***
 
- sad <- get_tidy_audio_analysis('0ol6vgtY8Wapli7sr663QQ')
- sad %>% 
-     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
-     ggplot(aes(x = time, y = bpm, fill = power)) + 
-     geom_raster() + 
-     scale_fill_viridis_c(guide = 'none') +
-     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
-     theme_classic()
+ This mosaic confusion matrix shows the relation between three compositions of olga Neuwirth:
  
- scene6 <- get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH')
-
- scene6 %>% 
-     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
-     ggplot(aes(x = time, y = bpm, fill = power)) + 
-     geom_raster() + 
-     scale_fill_viridis_c(guide = 'none') +
-     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
-     theme_classic()
-```
-
-***
-
-These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing about what it should be say about the songs. Otherwise it is interisting to see how the tempograms try to handle this. 
-
-The last tempogram (with the song from *Lost Highway*) is chaotic as the other two song but around 150 sec. the tempo gets clear for a moment. This is because this is the only part of the song where are clear instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
-
-(Look at the Tab "Comparison of Chroma, Cepsto- and Tempogram" where I compared these three -grams with each other for a closer look at this song)
-
-### Novelty function (happiest vs. saddest song of all her music)
-
-```{r}
- happy <- 
-     get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK') %>% 
-     select(segments) %>% unnest(segments)
- happy %>% 
-     mutate(loudness_max_time = start + loudness_max_time) %>% 
-     arrange(loudness_max_time) %>% 
-     mutate(delta_loudness = loudness_max - lag(loudness_max)) %>% 
-     ggplot(aes(x = loudness_max_time, y = pmax(0, delta_loudness))) +
-     geom_line() +
-     xlim(0, 30) +
-     theme_minimal() +
-     labs(x = 'Time (s)', y = 'Novelty')
- 
-  sad <- 
-     get_tidy_audio_analysis('0ol6vgtY8Wapli7sr663QQ') %>% 
-     select(segments) %>% unnest(segments)
- sad %>% 
-     mutate(loudness_max_time = start + loudness_max_time) %>% 
-     arrange(loudness_max_time) %>% 
-     mutate(delta_loudness = loudness_max - lag(loudness_max)) %>% 
-     ggplot(aes(x = loudness_max_time, y = pmax(0, delta_loudness))) +
-     geom_line() +
-     xlim(0, 30) +
-     theme_minimal() +
-     labs(x = 'Time (s)', y = 'Novelty')
-```
-
-***
-
-Novelty function of 1. the happiest and 2. the saddest of all her composed songs (I found on Spotify). You can clearly see the difference of these two songs which are, focused on valence, the most different songs compared to each other.
-
-### Comparison of Chroma-, Cepsto- & Tempogram
-
-```{r}
-
-scene6 <- 
-    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
-    select(segments) %>% unnest(segments) %>% 
-    select(start, duration, pitches)
-
-scene6 %>% 
-    mutate(pitches = map(pitches, compmus_normalise, 'euclidean')) %>% 
-    compmus_gather_chroma %>% 
-    ggplot(
-        aes(
-            x = start + duration / 2, 
-            width = duration, 
-            y = pitch_class, 
-            fill = value)) + 
-    geom_tile() +
-    labs(x = 'time (s)', y = NULL, fill = 'magnitude') +
-    theme_minimal()
-
-scene6 <- 
-    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
-    compmus_align(beats, segments) %>% 
-    select(beats) %>% unnest(beats) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'rms', norm = 'euclidean'))
-
-scene6 %>% 
-    compmus_gather_timbre %>% 
-    ggplot(
-        aes(
-            x = start + duration / 2, 
-            width = duration, 
-            y = basis, 
-            fill = value)) + 
-    geom_tile() +
-    labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
-    scale_fill_viridis_c(option = 'E') +
-    theme_classic()
-
- scene6 <- get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH')
-
- scene6 %>% 
-     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
-     ggplot(aes(x = time, y = bpm, fill = power)) + 
-     geom_raster() + 
-     scale_fill_viridis_c(guide = 'none') +
-     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
-     theme_classic()
-```
-
-***
-
-This is a comparison of the Chroma-, Cepsto- & Tempogram of the song with the lowest valence of the composition *Lost Highway* from Olga Neuwirth.
-
-These clearly show that the part around 150 sec. is different from the rest of the song. This is because these ~30 seconds are the only part where "clear" instrument sounds are used without a voice speaking over them. The rest of the song are kinda "out of space" noises and sound which the -grams cannot handle properly (see "Tempograms - happy, sad & something inbetween")
+ Bählamms Fest
+ Lost Highway
+ The death and the girl II
 
 ### May I introduce to you: Olga Neuwirth
 Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
@@ -278,9 +148,7 @@ key_templates <-
         'G#:min', circshift(minor_key,  8),
         'B:maj' , circshift(major_key, 11),
         'D#:min', circshift(minor_key,  3))
-```
 
-```{r}
 happy <- 
     get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK') %>% 
     compmus_align(sections, segments) %>% 
@@ -334,6 +202,81 @@ The highlighted spots show that there is almost no key. In this sections ypo onl
 
 The "happiest" song is composed in major and the "saddest" in minor which is as "determined thing in music theory" that major sounds happy and minor sounds sad. I would had expected that her "happiest" song is in minor so the depressed aspect in her music would not only be present in the title (see "The mood of her music") but also in the key. But I guess that in this case the valence would be lower analyzed by Spotifyr (?).
 
+### Novelty function (happiest vs. saddest song of all her music)
+
+```{r}
+ happy <- 
+     get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK') %>% 
+     select(segments) %>% unnest(segments)
+ happy %>% 
+     mutate(loudness_max_time = start + loudness_max_time) %>% 
+     arrange(loudness_max_time) %>% 
+     mutate(delta_loudness = loudness_max - lag(loudness_max)) %>% 
+     ggplot(aes(x = loudness_max_time, y = pmax(0, delta_loudness))) +
+     geom_line() +
+     xlim(0, 30) +
+     theme_minimal() +
+     labs(x = 'Time (s)', y = 'Novelty')
+ 
+  sad <- 
+     get_tidy_audio_analysis('0ol6vgtY8Wapli7sr663QQ') %>% 
+     select(segments) %>% unnest(segments)
+ sad %>% 
+     mutate(loudness_max_time = start + loudness_max_time) %>% 
+     arrange(loudness_max_time) %>% 
+     mutate(delta_loudness = loudness_max - lag(loudness_max)) %>% 
+     ggplot(aes(x = loudness_max_time, y = pmax(0, delta_loudness))) +
+     geom_line() +
+     xlim(0, 30) +
+     theme_minimal() +
+     labs(x = 'Time (s)', y = 'Novelty')
+```
+
+***
+
+Novelty function of 1. the happiest and 2. the saddest of all her composed songs (I found on Spotify). At first it seems that you can clearly see the difference of these two songs which are, focused on valence, the most different songs compared to each other. But this is not true. If you take a closer look on the scale you see that both songs are not that different. Because of single parts which really stands out at the first song (over 10) the scale is different from the second song and it seems that the difference between them is bigger than it actually is.
+
+### Tempogram - happy, sad & something inbetween
+
+```{r}
+happy <- get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK')
+
+happy %>% 
+    tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
+    ggplot(aes(x = time, y = bpm, fill = power)) + 
+    geom_raster() + 
+    scale_fill_viridis_c(guide = 'none') +
+    labs(x = 'Time (s)', y = 'Tempo (BPM)') +
+    theme_classic()
+
+ sad <- get_tidy_audio_analysis('0ol6vgtY8Wapli7sr663QQ')
+ sad %>% 
+     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
+     ggplot(aes(x = time, y = bpm, fill = power)) + 
+     geom_raster() + 
+     scale_fill_viridis_c(guide = 'none') +
+     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
+     theme_classic()
+ 
+ scene6 <- get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH')
+
+ scene6 %>% 
+     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
+     ggplot(aes(x = time, y = bpm, fill = power)) + 
+     geom_raster() + 
+     scale_fill_viridis_c(guide = 'none') +
+     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
+     theme_classic()
+```
+
+***
+
+These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing about what it should be say about the songs. Otherwise it is interisting to see how the tempograms try to handle this. 
+
+The last tempogram (with the song from *Lost Highway*) is chaotic as the other two song but around 150 sec. the tempo gets clear for a moment. This is because this is the only part of the song where are clear instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
+
+(Look at the Tab "Comparison of Chroma, Cepsto-, Tempo- & Keygram" where I compared these three -grams with each other for a closer look at this song)
+
 ### What is "happy" for her is "depressed" for others
 
 ```{r}
@@ -351,7 +294,7 @@ ggplotly(sad)
 
 ***
 
-Comparison of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway* in valence and energy. It shows that *Lost Highway* is "much more" happier than *Bählamms Fest* (and her music in general - compare "The mood of her music"). This could be because *Lost Highway* is based on a Film with a story that already existed. So she "had to obey some rules" for this composition.
+The comparison of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway* in valence and energy shows that *Lost Highway* is "much more" happier than *Bählamms Fest* (and her music in general - compare "The mood of her music"). This could be because *Lost Highway* is based on a Film with a story that already existed. So she "had to obey some rules" for this composition.
 That she nonetheless put her character in this composition shows the comparison between her composed music for *Lost Highway* and the used music in the film *Lost Highway* by David Lynch (see "Lost Highway - comparison to "the original"")
 
 ### Lost Highway - comparison to "the original"
@@ -375,16 +318,15 @@ Comparison between the playlist of her work of *Lost Highway* and a playlist bas
 
 This shows how she adds her personal character to a work that already exists. The valence is much more lower in her work.
 
-### Chromagram (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
+### Comparison of Chroma-, Cepsto-, Tempo- & Keygram
 
 ```{r}
+
 scene6 <- 
     get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
     select(segments) %>% unnest(segments) %>% 
     select(start, duration, pitches)
-```
 
-```{r}
 scene6 %>% 
     mutate(pitches = map(pitches, compmus_normalise, 'euclidean')) %>% 
     compmus_gather_chroma %>% 
@@ -397,15 +339,7 @@ scene6 %>%
     geom_tile() +
     labs(x = 'time (s)', y = NULL, fill = 'magnitude') +
     theme_minimal()
-```
 
-***
-
-This song has the mode = 1 (so it is a song in major) and the key = 8 (so it is a song in g). It is also visible in the chromagram - but it is interesting that there are several highlighted spots in the chromagram which more or less are far away from the major g chord.
-
-### Cepstogram (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
-
-```{r}
 scene6 <- 
     get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
     compmus_align(beats, segments) %>% 
@@ -420,9 +354,7 @@ scene6 <-
             map(segments, 
                 compmus_summarise, timbre, 
                 method = 'rms', norm = 'euclidean'))
-```
 
-```{r}
 scene6 %>% 
     compmus_gather_timbre %>% 
     ggplot(
@@ -435,62 +367,18 @@ scene6 %>%
     labs(x = 'Time (s)', y = NULL, fill = 'Magnitude') +
     scale_fill_viridis_c(option = 'E') +
     theme_classic()
-```
 
-***
+ scene6 <- get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH')
 
-This is a cepstogram of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
-
-Is there a possibility to put this, the self similarity matrice and the chromagram on one tab? I wanted to add this cepstogramm to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
-
-### Self similarity matrice (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
-
-```{r}
-scene6 <- 
-    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
-    compmus_align(bars, segments) %>% 
-    select(bars) %>% unnest(bars) %>% 
-    mutate(
-        pitches = 
-            map(segments, 
-                compmus_summarise, pitches, 
-                method = 'rms', norm = 'euclidean')) %>% 
-    mutate(
-        timbre = 
-            map(segments, 
-                compmus_summarise, timbre, 
-                method = 'rms', norm = 'euclidean'))
-```
-
-```{r}
-song <- scene6 %>% 
-    compmus_self_similarity(timbre, 'cosine') %>% 
-    ggplot(
-        aes(
-            x = xstart + xduration / 2, 
-            width = xduration,
-            y = ystart + yduration / 2,
-            height = yduration,
-            fill = d)) + 
-    geom_tile() +
-    coord_fixed() +
-    scale_fill_viridis_c(option = 'E', guide = 'none') +
-    theme_classic() +
-    labs(x = '', y = '')
-
-ggplotly(song)
-```
-
-***
-
-This is a self-similarity matrice of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
-
-Is there a possibility to put this, the cepstogram and the chromagram on one tab? I  wanted to add this self similarity matrice to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
-
-### Keygram (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
-
-```{r}
-circshift <- function(v, n) {if (n == 0) v else c(tail(v, n), head(v, -n))}
+ scene6 %>% 
+     tempogram(window_size = 4, hop_size = 1, cyclic = FALSE) %>% 
+     ggplot(aes(x = time, y = bpm, fill = power)) + 
+     geom_raster() + 
+     scale_fill_viridis_c(guide = 'none') +
+     labs(x = 'Time (s)', y = 'Tempo (BPM)') +
+     theme_classic()
+ 
+ circshift <- function(v, n) {if (n == 0) v else c(tail(v, n), head(v, -n))}
                                     
     # C     C#    D     Eb    E     F     F#    G     Ab    A     Bb    B 
 major_chord <- 
@@ -571,9 +459,7 @@ key_templates <-
         'G#:min', circshift(minor_key,  8),
         'B:maj' , circshift(major_key, 11),
         'D#:min', circshift(minor_key,  3))
-```
 
-```{r}
 scene6 <- 
     get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
     compmus_align(sections, segments) %>% 
@@ -596,9 +482,54 @@ scene6 %>%
 
 ***
 
-This is a keygram of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
+This is a comparison of the Chroma-, Cepsto-, Tempo- & Keygram of the song with the lowest valence of the composition *Lost Highway* from Olga Neuwirth.
 
-This clearly shows that something happens in the song at ~50 sec. and ~130 sec. In this parts the song almost have no key. This is because in this sections there is only a voice to hear which holds one single tone (almost no instruments). So I guess that this is not enough to identify a key.
+These clearly show that the part around 150 sec. is different from the rest of the song. This is because these ~30 seconds are the only part where "clear" instrument sounds are used without a voice speaking over them. The rest of the song are kinda "out of space" noises and sounds which the -grams cannot handle properly (see "Tempograms - happy, sad & something inbetween")
+
+The Keygram also shows that something happens in the song at ~50 sec. and ~130 sec. In this parts the song almost have no key. This is because in this sections there is only a voice to hear which holds on one single tone (almost no instruments). So I guess that this is not enough to identify a key.
+
+
+### Self similarity matrice (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
+
+```{r}
+scene6 <- 
+    get_tidy_audio_analysis('2smcNkJgajjvTnyvxLl9xH') %>% 
+    compmus_align(bars, segments) %>% 
+    select(bars) %>% unnest(bars) %>% 
+    mutate(
+        pitches = 
+            map(segments, 
+                compmus_summarise, pitches, 
+                method = 'rms', norm = 'euclidean')) %>% 
+    mutate(
+        timbre = 
+            map(segments, 
+                compmus_summarise, timbre, 
+                method = 'rms', norm = 'euclidean'))
+
+song <- scene6 %>% 
+    compmus_self_similarity(timbre, 'cosine') %>% 
+    ggplot(
+        aes(
+            x = xstart + xduration / 2, 
+            width = xduration,
+            y = ystart + yduration / 2,
+            height = yduration,
+            fill = d)) + 
+    geom_tile() +
+    coord_fixed() +
+    scale_fill_viridis_c(option = 'E', guide = 'none') +
+    theme_classic() +
+    labs(x = '', y = '')
+
+ggplotly(song)
+```
+
+***
+
+This is a self-similarity matrice of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
+
+Is there a possibility to put this, the cepstogram and the chromagram on one tab? I  wanted to add this self similarity matrice to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
 
 ### Personality = Music?
 
