@@ -21,11 +21,7 @@ library(spotifyr)
 
 ***
 
- This mosaic confusion matrix shows the relation between three compositions of olga Neuwirth:
- 
- Bählamms Fest
- Lost Highway
- The death and the girl II
+ This mosaic confusion matrix shows the relation between three compositions of Olga Neuwirth.
 
 ### May I introduce to you: Olga Neuwirth
 Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
@@ -236,7 +232,7 @@ The "happiest" song is composed in major and the "saddest" in minor which is as 
 
 Novelty function of 1. the happiest and 2. the saddest of all her composed songs (I found on Spotify). At first it seems that you can clearly see the difference of these two songs which are, focused on valence, the most different songs compared to each other. But this is not true. If you take a closer look on the scale you see that both songs are not that different. Because of single parts which really stands out at the first song (over 10) the scale is different from the second song and it seems that the difference between them is bigger than it actually is.
 
-### Tempogram - happy, sad & something inbetween
+### Tempo & Chaos - happy, sad & something inbetween
 
 ```{r}
 happy <- get_tidy_audio_analysis('5Zh7XZqTsYDuriSNqpnbBK')
@@ -271,11 +267,15 @@ happy %>%
 
 ***
 
-These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing about what it should be say about the songs. Otherwise it is interisting to see how the tempograms try to handle this. 
+In advance: yes, I tried different methods to plot this. I am very sure that the songs she composed are not suitable for this kind of analysis - but anyways it is very interesting especially regarding to her working method!
 
-The last tempogram (with the song from *Lost Highway*) is chaotic as the other two song but around 150 sec. the tempo gets clear for a moment. This is because this is the only part of the song where are clear instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
+These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing about what it should be say about the songs. Otherwise it is interesting to see how the tempograms try to handle this. 
+
+The last tempogram (with the song from *Lost Highway*) is chaotic as the other two songs but around 150 sec. the tempo gets clear for a moment. This is because this is the only part of the song where are clear instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
 
 (Look at the Tab "Comparison of Chroma, Cepsto-, Tempo- & Keygram" where I compared these three -grams with each other for a closer look at this song)
+
+Anyways is this chaos very interesting regarding to her working methods. 
 
 ### What is "happy" for her is "depressed" for others
 
@@ -531,6 +531,27 @@ This is a self-similarity matrice of the song with the lowest valence from Olga 
 
 Is there a possibility to put this, the cepstogram and the chromagram on one tab? I  wanted to add this self similarity matrice to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
 
+### Did you say something? - The voice of her music
+
+```{r}
+olganeuwirth <- get_playlist_audio_features('applejackey', '3ct4SKi3r2IvsMnPYorsSN')
+
+olganeuwirth %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point(alpha = 0.6) + theme_classic()
+
+general2 <- olganeuwirth %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode, label = track.name)) + geom_point(alpha = 0.6) + theme_classic()
+
+ggplotly(general2)
+```
+
+***
+
+This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. This time with a focus on loud- & speechiness. It shows that her music in general is not that speechy but loud. 
+(See "The progression of the voice")
+
+### The progression of the voice
+
+
+ 
 ### Personality = Music?
 
 After a first look at Olga Neuwirths compositions with a focus on the energy and valence it becomes clear that the aspect of her depressed personality definitely shows up in her music. This also shows the comparison between her interpretation of *Lost Highway* and the original by David Lynch. Her music is much more depressed than the original film music.
