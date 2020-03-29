@@ -193,7 +193,7 @@ The highlighted spots show that there is almost no key. In this sections you onl
 
 The happiest song is composed in major and the saddest in minor which is a "determined thing in music theory" that major sounds happy and minor sounds sad. I would had expected that her happiest song is for example composed in minor so the depressed aspect in her music would not only be present in the title (see "The mood of her music") but also in the key. But I guess that in this case the valence would be lower analyzed by Spotifyr (?).
 
-### Novelty function (happiest vs. saddest song of all her music)
+### The novelty function of that mood (the happiest vs. the saddest)
 
 ```{r}
  happy <- 
@@ -226,6 +226,8 @@ The happiest song is composed in major and the saddest in minor which is a "dete
 ***
 
 Novelty function of 1. the happiest and 2. the saddest of all her composed songs (I found on Spotify). At first it seems that you can clearly see the difference of these two songs which are, focused on valence, the most different songs compared to each other. But this is not true. If you take a closer look on the scale you see that both songs are not that different. Because of single parts which really stands out at the first song (over 10) the scale is different from the second one and it seems that the difference between them is bigger than it actually is.
+
+It is interesting that these songs are, based on the valence, the "complete opposite", but the novelty function is almost the same.
 
 ### Tempo & Chaos - happy, sad & something inbetween
 
@@ -481,14 +483,16 @@ scene6 %>%
 
 ***
 
-This is a comparison of the Chroma-, Cepsto-, Tempo- & Keygram of the song with the lowest valence of the composition *Lost Highway* from Olga Neuwirth.
+This is a comparison of the Chroma-, Cepsto-, Tempo- & Keygram of the song with the lowest valence of the composition *Lost Highway* from Olga Neuwirth (mode = 1, key = 8, valence = 0,0299).
 
 These clearly show that the part around 150 sec. is different from the rest of the song. This is because these ~30 sec. are the only part where "clear" instrument sounds are used without a voice speaking over them. The rest of the song are kinda "out of space" noises and sounds which the -grams cannot handle properly. It is the same problem as by the tempograms before. (see "Tempograms - happy, sad & something inbetween")
 
 The Keygram also shows that something happens in the song at ~50 sec. and ~130 sec. In this parts the song almost have no key. This is because in this sections there is only a voice to hear which holds on one single tone (almost no instruments). So I guess that this is not enough to identify a key.
 
+The self similarity matrix for this song is in the next tab, cause this one is interactive. 
 
-### Self similarity matrice (The song with the lowest valence in *Lost Highway* (mode = 1, key = 8))
+
+### Self similarity matrix
 
 ```{r}
 scene6 <- 
@@ -526,7 +530,9 @@ ggplotly(song)
 
 ***
 
-This is the self-similarity matrice of the song with the lowest valence from Olga Neuwirths composition *Lost Highway*.
+This self-similarity matrix of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* also shows the different part ~150 seconds with a clear dark square. The diagonal line is very clear.
+
+I could plot it, but I must admit that I do not understand how to interpret that properly, I am very sorry!
 
 ### Did you say something? - The voice of her music
 
@@ -543,12 +549,12 @@ ggplotly(general2)
 ***
 
 This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. This time with a focus on loud- & speechiness.
-Two things that I have expected for this plot:
-1. For this to be musical performances on stage I thought that the speechiness would be higher.
-2. I hoped that her music reflects her determined character through this features.
+
+* Two things that I have expected for this plot:
+  + For this to be musical performances on stage I thought that the speechiness would be higher.
+  + I hoped that her music reflects her determined character through this features.
 
 So in both cases I expected more power in her music focused on these features. The aspect with the low speechiness really surprised me so I want to take a closer look at the speechiness for single compositions (see "The voice in a closeup").
-
 
 ### The voice in a closeup
 
@@ -572,7 +578,8 @@ goodnightmommy %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot
 
 ***
 
-I expected her compositions to be more speechy in general due to the fact that these are musical performances on stage, expect of *Goodnight Mommy*. 
+I expected her compositions to be more speechy in general due to the fact that these are musical performances on stage, expect of *Goodnight Mommy*.
+
 Nonetheless, the analyzing of the speechiness shows something very interesting. The plots compared to each other show clearly that the speechiness always follows the same structure. In each case there is exactly one outlier which is way more speechy than the other songs. Also the speechiness of these outliers and in general is almost the same in each composition except from *Goodnight Mommy*. But this exception makes sense because the first three compositions are for musical performances on stage and *Goodnight Mommy* is a soundtrack album for a film.
 
 ### Relationship of three compositions
@@ -585,7 +592,10 @@ Nonetheless, the analyzing of the speechiness shows something very interesting. 
 
 The Relationship between three of Olga Neuwirths compositions - Bählamms Fest, Lost Highway and The death and the girl II.
 
-The confusion matrix shows that *Lost Highway* is much more different than *Bählamms Fest* and *The girl and the death II*. This also matches the fact that *Lost Highway* is based on a already existing work. That this composition is an outlier already show the tabs "What is "happy" for her is "depressed" for others" and "Lost Highway - comparison to "the original"".
+*Lost Highway* is easily identifiable by the confusion matrix (least mistakes between predicted and true), which is an indication that this composition is very different from the others. This also matches the fact that *Lost Highway* is based on a already existing work. That this composition is an outlier is already shown in the tabs "What is "happy" for her is "depressed" for others" and "Lost Highway - comparison to "the original"".
+
+Furthermore, it appears that the model rarely mistakes *Bählamms Fest* for *The death and the girl II* because the rectangles in the bottom left and upper left are very small, which also indicates big differences between these pieces. This does not hold for *Lost Highway* and *Bählamms Fest*, or *Lost Highway* and *The death and the girl II*.
+
 
 __Instrumentalness__
 
@@ -597,9 +607,9 @@ For the liveness I have guessed that every song has to be in the range at least 
  
 ### Personality = Music?
 
-After analyzing her music in general and several compositions in detail it becomes clear that the aspect of her depressed personality definitely shows up in her music. This shows especially the comparison between her interpretation of Lost Highway and the original by David Lynch. Her music is much more depressed than the original film music. But also the plot with all her songs (from Spotify) shows this. The valence is very low in general. Much more lower than I expected. I knew that she is depressed but this low valence surprised me, nonetheless.
+After analyzing her music in general and several compositions in detail it becomes clear that the aspect of her depressed personality definitely shows up in her music. This shows especially the comparison between her interpretation of Lost Highway and the original by David Lynch. Her music is much more depressed than the original film music. But also the plot with all her songs (from Spotify) shows this. The valence is very low in general. Much more lower than I expected. I knew that she is depressed but this low valence surprised me, nonetheless. So it is obvious that the depressed aspect is the mean character not only for her but also for her music. 
 
-I hoped to find the determined character of hers in features like loud- and speechiness but I must admit that I would not say that these are showing this aspect of her character like the valence reflects her depression.
+I hoped to find the determined character of her personality in features like loud- and speechiness but I must admit that I would not say that these are showing this aspect of her character like the valence reflects her depression.
 
 But nonetheless I found something I was not looking for but I still admired in the seminar last semester: her compositions are so much well thought out. This is shown in her music scores where she also notes directions for the performers, sound and video engineers (it would be too much to describe this here but there are several aspects that fascinated me because they are so good thought out). Due this project her well thought out composing is clearly shown in the comparison of the loud- and speechiness of her compositions. Every composition follows almost the exact same pattern. The exception is *Goodnight Mommy* because this is a soundtrack album for a film. So this makes sense. The other three examples are for musical performances on stage. This fact and that the visualizations for these are looking so similar fascinating me again. I guess that she does not plot her songs before publishing them but it looks like this was intended to be compared and look like this. 
 
