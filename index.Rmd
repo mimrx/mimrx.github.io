@@ -269,7 +269,8 @@ These three tempograms of 1. the happiest, 2. the saddest of all her composed so
 The last tempogram (the song from *Lost Highway*) is chaotic as the other two songs but around 150 seconds the tempo gets clear for a moment. This is because this is the only part of the song where are used "clear" instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
 (Look at the tab "Comparison of Chroma, Cepsto-, Tempo- & Keygram" where I compared these three -grams with each other for a closer look at this song)
 
-#### Her motivation & working method
+__Her motivation & working method__
+
 Anyways is this chaos very interesting regarding to her working methods. The modes of perception shaped by mainstream images and sounds, such as looking from a central perspective or passive listening, which are all too often assisted by language that conveys meaning as a hermeneutic adjusting screw, motivates her methodological interest in the deconstruction of perception. Olga Neuwirth surely works with "real instrument sounds" but often (I'm not sure if it is in every of her works, but I guess) she detunes instruments, uses (detuned) children instruments or works with sound morphing. With this sound morphing she creates so called "hybrid sounds" where she mixes sounds from different instruments to a new one. This leads to "confusion" in hearing what she definitely wants to create.
 According to Olga Neuwirth, disorientation and confusion are no states of negative connotation, but rather perceptual effects that are deliberately aimed for. Thus she consciously confronts the audience with the seemingly strange, which in its initial discomfort wants to result in an even more productive experience.
 
@@ -292,7 +293,7 @@ ggplotly(sad)
 
 ***
 
-The comparison of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway* in valence and energy shows that *Lost Highway* is "much more" happier than *Bählamms Fest* (and her music in general - compare "The mood of her music"). This could be because *Lost Highway* is based on a film with a story that already existed. So she "had to obey some rules" for this composition.
+The comparison of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway* in valence and energy shows that *Lost Highway* is "much more" happier than *Bählamms Fest* (and her music in general - see "The mood of her music"). This could be because *Lost Highway* is based on a film with a story that already existed. So she "had to obey some rules" for this composition.
 That she nonetheless put her character in this composition shows the comparison between her composed music for *Lost Highway* and the used music in the film *Lost Highway* by David Lynch (see "Lost Highway - comparison to "the original"")
 
 ### Lost Highway - comparison to "the original"
@@ -541,9 +542,13 @@ ggplotly(general2)
 
 ***
 
-This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. This time with a focus on loud- & speechiness. It shows that her music in general is not that speechy but loud.
-For this to be musicstallations, video operas etc. I thought that the speechiness would be higher.
-(See "The voice in a closeup")
+This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. This time with a focus on loud- & speechiness.
+Two things that I have expected for this plot:
+1. For this to be musical performances on stage I thought that the speechiness would be higher.
+2. I hoped that her music reflects her determined character through this features.
+
+So in both cases I expected more power in her music focused on these features. The aspect with the low speechiness really surprised me so I want to take a closer look at the speechiness for single compositions (see "The voice in a closeup").
+
 
 ### The voice in a closeup
 
@@ -567,9 +572,8 @@ goodnightmommy %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot
 
 ***
 
-The plots compared to each other show clearly that the speechiness always follows the same structure. In each case there is exactly one outlier which is way more speechy than the other songs. Also the speechiness of these outliers and in general is almost the same in each composition except from *Goodnight Mommy*. But this exception makes sense because the first three compositions are for musical performances on stage and *Goodnight Mommy* is a soundtrack album for a film.
-
-The fact that the range 0.33 and 0.66 describes tracks that may contain both music and speech shows what I meant earlier (see "Tempo & Chaos - happy, sad & something inbetween"). She surely uses instruments but not in a "stereotypical" way. She 
+I expected her compositions to be more speechy in general due to the fact that these are musical performances on stage, expect of *Goodnight Mommy*. 
+Nonetheless, the analyzing of the speechiness shows something very interesting. The plots compared to each other show clearly that the speechiness always follows the same structure. In each case there is exactly one outlier which is way more speechy than the other songs. Also the speechiness of these outliers and in general is almost the same in each composition except from *Goodnight Mommy*. But this exception makes sense because the first three compositions are for musical performances on stage and *Goodnight Mommy* is a soundtrack album for a film.
 
 ### Relationship of three compositions
 
@@ -581,7 +585,13 @@ The fact that the range 0.33 and 0.66 describes tracks that may contain both mus
 
 The Relationship between three of Olga Neuwirths compositions - Bählamms Fest, Lost Highway and The death and the girl II.
 
+The confusion matrix shows that *Lost Highway* is much more different than *Bählamms Fest* and *The girl and the death II*. This also matches the fact that *Lost Highway* is based on a already existing work. That this composition is an outlier already show the tabs "What is "happy" for her is "depressed" for others" and "Lost Highway - comparison to "the original"".
+
+__Instrumentalness__
+
 It is interesting to see that for the instrumentalness there is either a huge instrumentalness (0.75) or none (0.00). There is almost no inbetween. But regarding to the fact that these are all songs from "operas" (she does not call her works opera but she has for almost every of her works a different "genre name") it is not surprisingly. Either there is someone singing/talking during a scene or there is only music/sounds/noises during for example a scene that could be interpreted as an interlude or something similar.
+
+__Liveness__
 
 For the liveness I have guessed that every song has to be in the range at least more than 0.5 because every composition I choosed (and I guess that is on Spotify anyways) is a recording from a live performance. So it surprised me that many songs not only from one but from all three compositions are analyzed with a very low liveness.
  
@@ -594,4 +604,3 @@ I hoped to find the determined character of hers in features like loud- and spee
 But nonetheless I found something I was not looking for but I still admired in the seminar last semester: her compositions are so much well thought out. This is shown in her music scores where she also notes directions for the performers, sound and video engineers (it would be too much to describe this here but there are several aspects that fascinated me because they are so good thought out). Due this project her well thought out composing is clearly shown in the comparison of the loud- and speechiness of her compositions. Every composition follows almost the exact same pattern. The exception is *Goodnight Mommy* because this is a soundtrack album for a film. So this makes sense. The other three examples are for musical performances on stage. This fact and that the visualizations for these are looking so similar fascinating me again. I guess that she does not plot her songs before publishing them but it looks like this was intended to be compared and look like this. 
 
 Additionally, I can say that her songs definitely are not sound the same. I listened to almost every song on Spotify due to this project. But this thinking also could be determined to individual perceptions and hearing habits which Olga Neuwirth wants to rearrange due confusion anyways. So I guess it is not that unusual that some would say that her music sounds the same. The same in confusing in any case. But this is what it makes her music and her in person so interesting. I also guess that this critique was on a personal aspect because I know that he does not like her music that much.
-*   try to get tables for the descriptions in the columns
