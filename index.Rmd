@@ -16,7 +16,8 @@ library(spotifyr)
 ```
 
 ### May I introduce to you: Olga Neuwirth
-Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critic that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
+
+Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critique that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
 
 Furthermore I want to analyse the character of her music in general.Does the features of her music represent her personal character? - The texts we read about her in the seminar assumed this.
 
@@ -34,6 +35,10 @@ Furthermore I want to compare her own works with each other and - last but not l
     + does she show her depression in her music? -> which features show this?
     + does she show her strong determined character in her music? -> which features show this?
     
+***
+
+![Olga Neuwirth, © Harald Fronzeck](olga.jpg)
+
 ### The mood of her music
 
 ```{r}
@@ -264,10 +269,13 @@ In advance: yes, I tried different methods to plot this. I am very sure that the
 These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing about what it should be say about the songs. Otherwise it is interesting to see how the tempograms try to handle this. 
 
 The last tempogram (with the song from *Lost Highway*) is chaotic as the other two songs but around 150 sec. the tempo gets clear for a moment. This is because this is the only part of the song where are clear instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
-
 (Look at the Tab "Comparison of Chroma, Cepsto-, Tempo- & Keygram" where I compared these three -grams with each other for a closer look at this song)
 
-Anyways is this chaos very interesting regarding to her working methods. 
+#### Her motivation & working method
+Anyways is this chaos very interesting regarding to her working methods. The modes of perception shaped by mainstream images and sounds, such as looking from a central perspective or passive listening, which are all too often assisted by language that conveys meaning as a hermeneutic adjusting screw, motivates her methodological interest in the deconstruction of perception. Olga Neuwirth surely works with "real instrument sounds" but often (I'm not sure if it is in every of her works, but I guess) she detunes instruments, uses (detuned) children instruments or works with sound morphing. With this sound morphing she creates so called "hybrid sounds" where she mixes sounds from different instruments to a new one. This leads to "confusion" in hearing what she definitely wants to create.
+According to Olga Neuwirth, disorientation and confusion are no states of negative connotation, but rather perceptual effects that are deliberately aimed for. Thus she consciously confronts the audience with the seemingly strange, which in its initial discomfort wants to result in an even more productive experience.
+
+This confusion and the resulting chaos could be seen as visualized through this tempograms even if they are not connected in any way.
 
 ### What is "happy" for her is "depressed" for others
 
@@ -539,27 +547,33 @@ ggplotly(general2)
 
 This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. This time with a focus on loud- & speechiness. It shows that her music in general is not that speechy but loud.
 For this to be musicstallations, video operas etc. I thought that the speechiness would be higher.
-(See "The progression of the voice")
+(See "The voice in a closeup")
 
-### The progression of the voice
+### The voice in a closeup
 
 ```{r}
 bählammsfest <- get_playlist_audio_features('applejackey', '0S7AN9KBAM2uBorb7p5okC')
 
-bählammsfest %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point(alpha = 0.6) + theme_minimal() + ggtitle("Bählamms Fest")
+bählammsfest %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point() + theme_bw() + labs(title = "Bählamms Fest", subtitle = "(1999)", caption = "animation-opera")
 
 dertodunddasmädchenII <- get_playlist_audio_features('applejackey', '4XW6Ch7smd3Ngwh7RNQmck')
 
-dertodunddasmädchenII %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point(alpha = 0.6) + theme_minimal() + ggtitle("The death and the girl II")
+dertodunddasmädchenII %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point() + theme_bw() + labs(title = "The death and the girl II", subtitle = "(2000)", caption = "audio piece based on a text by Elfriede Jelinek")
 
 losthighway <- get_playlist_audio_features('applejackey', '0rpE8eKsaal3ovP4TAYNgZ')
 
-losthighway %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point(alpha = 0.6) + theme_minimal() + ggtitle ("Lost Highway")
+losthighway %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point() + theme_bw() + labs(title = "Lost Highway", subtitle = "(2003)", caption = "video-opera")
 
 goodnightmommy <- get_playlist_audio_features('applejackey', '6cZmLiip5N2zcJCbL7blFu')
 
-goodnightmommy %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point(alpha = 0.6) + theme_minimal() + ggtitle("Goodnight Mommy")
+goodnightmommy %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot(aes(x = speechiness, y = loudness, colour = mode)) + geom_point() + theme_bw() + labs(title = "Goodnight Mommy", subtitle = "(2016)", caption = "original motion picture soundtrack to *Goodnight Mommy*")
 ```
+
+***
+
+The plots compared to each other show clearly that the speechiness always follows the same structure. In each case there is exactly one outlier which is way more speechy than the other songs. Also the speechiness of these outliers and in general is almost the same in each composition except from *Goodnight Mommy*. But this exceptation makes sense because the first three compositions are for musical performances and *Goodnight Mommy* is a soundtrack album for a film.
+
+The fact that the range 0.33 and 0.66 describes tracks that may contain both music and speech shows what I meant earlier (see "Tempo & Chaos - happy, sad & something inbetween"). She surely uses instruments but not in a "stereotypical" way. She 
 
 ### Relationship of three compositions
 
@@ -586,4 +600,8 @@ But the depression is not the only strong aspect of her personality. She also is
 *   plot the mean character of her music in general
         + give this an own character/personality?
             + compare this with her personality
+            
+### Different songs, same sound?
+
+The respond of the critique from my friend that "every song sounds the same" is that they definitely not. There are some structures she followed through her compositions.
 *   try to get tables for the descriptions in the columns
