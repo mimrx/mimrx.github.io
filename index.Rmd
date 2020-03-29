@@ -17,15 +17,13 @@ library(spotifyr)
 
 ### May I introduce to you: Olga Neuwirth
 
-Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critique that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to take a look if the features are the same or not and if they are not the same I want to take a look on how they changed by time.
-
-Furthermore I want to analyse the character of her music in general.Does the features of her music represent her personal character? - The texts we read about her in the seminar assumed this.
+Last semester I had a seminar about Olga Neuwirth - a contemporary composer from austria - and a friend of mine had the critique that "every song sounds the same". So I had the idea to analyze the features of her songs. I want to analyze the character of her music and compare this with the character of her personality. Does the features of her music represent her personal character? - The texts we read about her in the seminar assumed this.
 
 The primary focus for this lies on the valence and energy of her compositions because she is a very depressed person among other things based on an accident she had when she was fifteen years old. She actually wanted to be a jazz trumpeter but because of this accident she was not able to play the trumpet anymore. So she "took the burden" to become a componist and shows this depression in her music.
 
-But beside her depression she has several aspects in her personality which I want to "search" in her music. For example has she a very determined and strong character. She claims a lot that it is hard for women to be a componist - to be taken serious in this business. So she sets statements with the content of her works. In the past she was denied by several institutions but in 2019 she was the first female woman which presented an opera at the *Vienna State Opera*. I want to look if this power and energy is shown in her music, too. So for this I want to take a look at the features of all her works I can find on Spotify and how these matches her personality (especially focused on valence, energy and loudness).
+But beside her depression, which is definitely the biggest part, she has several aspects in her personality which I want to "search" in her music. For example has she a very determined and strong character. She claims a lot that it is hard for women to be a componist - to be taken serious in this business. So she sets statements with the content of her works. In the past she was denied by several institutions but in 2019 she was the first female componist which presented an opera at the *Vienna State Opera*. I want to look if this power and energy is shown in her music, too. So for this I want to take a look at the features of all her works I can find on Spotify and how these matches her personality (especially focused on valence, energy, loudness & speechiness).
 
-Furthermore I want to compare her own works with each other and - last but not least - her work *Lost Highway* (which is based on the film *Lost Highway* by David Lynch) with a playlist based on the film music of *Lost Highway* by David Lynch. Here I want to take a look on how the valence and energy was changed by her compared to the "original" - so I analyse how works that already exists are changed by her with her own character.
+Furthermore I want to compare her own works with each other and - last but not least - her work *Lost Highway* (which is based on the film *Lost Highway* by David Lynch) with a playlist based on the film music of *Lost Highway* by David Lynch. Here I want to take a look on how the valence and energy was changed by her compared to the "original" - so I analyze how she may adds her personality to works that already exists.
 
 #### Summarize of what I want to do
 * comparison of all her songs I find on Spotify
@@ -53,7 +51,7 @@ ggplotly(general)
 
 ***
 
-This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. It shows very clear that her music in general has a very low valence - with a few exceptions. This matches the aspect of her depressed personality. 
+This is an overview of all songs (100) from Olga Neuwirth I found on Spotify. It shows very clearly that her music in general has a very low valence - with a few exceptions. This matches the aspect of her depressed personality. 
 As this plot shows there is an outlier song with a very high valence - this song is ironically from her composition *the death and the girl II*. Although this song has a high valence the "sadness" is represented in the title. So it does not matter if a song of her is "happy" or not, the depressed mood is always present in a way.
 The song with lowest valence of all of her songs is also from the composition *the death and the girl II* - so this composition has the highest valence distance.
 
@@ -187,13 +185,13 @@ These two keygrams show the outlier of her music, the song with the highest vale
 Both songs are from the composition *the death and the girl II*.
 Only by looking at the keygrams (without any background information) it is clear that these two songs could be pretty much the opposite of each other.
 
-The first keygram shows the "happiest" song with a valence of ~0.6890 (mode = 1, key = 1). (Scene 11 of *the death and the girl II*)
-In this song you hear the entire time a computational voice which speaks over the instruments. I guess that this is why almost the whole keygram is highlighted. I think the voice makes it hard to determine the key. At the dark spot the voice is not speaking.
+The first keygram shows the happiest song with a valence of ~0.6890 (mode = 1, key = 1). (Scene 11 of *the death and the girl II*)
+In this song you hear the entire time a computational voice which speaks over the instruments. I guess that this is why almost the whole keygram is highlighted. I think the voice makes it hard to determine the key. At the dark spot ~110 seconds the voice is not speaking.
 
-The second keygram shows the "saddest" song with a valence of ~0.0202 (mode = 1, key = 0). (Scene 15 of *the death and the girl II* )
-The highlighted spots show that there is almost no key. In this sections ypo only hear a high "out of space" tone (it is hard to describe). When the tone in the song gets lower/darker, the keygram gets darker as well.
+The second keygram shows the saddest song with a valence of ~0.0202 (mode = 1, key = 0). (Scene 15 of *the death and the girl II* )
+The highlighted spots show that there is almost no key. In this sections you only hear a high "out of space" tone, like glass sounds. When the tone in the song gets lower/darker, the keygram gets darker as well.
 
-The "happiest" song is composed in major and the "saddest" in minor which is as "determined thing in music theory" that major sounds happy and minor sounds sad. I would had expected that her "happiest" song is in minor so the depressed aspect in her music would not only be present in the title (see "The mood of her music") but also in the key. But I guess that in this case the valence would be lower analyzed by Spotifyr (?).
+The happiest song is composed in major and the saddest in minor which is a "determined thing in music theory" that major sounds happy and minor sounds sad. I would had expected that her happiest song is for example composed in minor so the depressed aspect in her music would not only be present in the title (see "The mood of her music") but also in the key. But I guess that in this case the valence would be lower analyzed by Spotifyr (?).
 
 ### Novelty function (happiest vs. saddest song of all her music)
 
@@ -227,7 +225,7 @@ The "happiest" song is composed in major and the "saddest" in minor which is as 
 
 ***
 
-Novelty function of 1. the happiest and 2. the saddest of all her composed songs (I found on Spotify). At first it seems that you can clearly see the difference of these two songs which are, focused on valence, the most different songs compared to each other. But this is not true. If you take a closer look on the scale you see that both songs are not that different. Because of single parts which really stands out at the first song (over 10) the scale is different from the second song and it seems that the difference between them is bigger than it actually is.
+Novelty function of 1. the happiest and 2. the saddest of all her composed songs (I found on Spotify). At first it seems that you can clearly see the difference of these two songs which are, focused on valence, the most different songs compared to each other. But this is not true. If you take a closer look on the scale you see that both songs are not that different. Because of single parts which really stands out at the first song (over 10) the scale is different from the second one and it seems that the difference between them is bigger than it actually is.
 
 ### Tempo & Chaos - happy, sad & something inbetween
 
@@ -266,10 +264,10 @@ happy %>%
 
 In advance: yes, I tried different methods to plot this. I am very sure that the songs she composed are not suitable for this kind of analysis - but anyways it is very interesting especially regarding to her working method!
 
-These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing about what it should be say about the songs. Otherwise it is interesting to see how the tempograms try to handle this. 
+These three tempograms of 1. the happiest, 2. the saddest of all her composed songs (I found on Spotify) and 3. the song with the lowest valence from her composition *Lost Highway* show that her music is not that good to be visualized in a tempogram. It looks very chaotic and says nothing what it should be say about the songs. Nonetheless it is interesting to see how the tempograms try to handle this. 
 
-The last tempogram (with the song from *Lost Highway*) is chaotic as the other two songs but around 150 sec. the tempo gets clear for a moment. This is because this is the only part of the song where are clear instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
-(Look at the Tab "Comparison of Chroma, Cepsto-, Tempo- & Keygram" where I compared these three -grams with each other for a closer look at this song)
+The last tempogram (the song from *Lost Highway*) is chaotic as the other two songs but around 150 seconds the tempo gets clear for a moment. This is because this is the only part of the song where are used "clear" instruments without a voice speaking. The rest of the song is a voice speaking (not exactly singing) or there are "out of space" sounds like glass sounds or a voice holding one high note straight. This is probably why the tempogram cannot determine a clear tempo except of this part. 
+(Look at the tab "Comparison of Chroma, Cepsto-, Tempo- & Keygram" where I compared these three -grams with each other for a closer look at this song)
 
 #### Her motivation & working method
 Anyways is this chaos very interesting regarding to her working methods. The modes of perception shaped by mainstream images and sounds, such as looking from a central perspective or passive listening, which are all too often assisted by language that conveys meaning as a hermeneutic adjusting screw, motivates her methodological interest in the deconstruction of perception. Olga Neuwirth surely works with "real instrument sounds" but often (I'm not sure if it is in every of her works, but I guess) she detunes instruments, uses (detuned) children instruments or works with sound morphing. With this sound morphing she creates so called "hybrid sounds" where she mixes sounds from different instruments to a new one. This leads to "confusion" in hearing what she definitely wants to create.
@@ -294,7 +292,7 @@ ggplotly(sad)
 
 ***
 
-The comparison of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway* in valence and energy shows that *Lost Highway* is "much more" happier than *Bählamms Fest* (and her music in general - compare "The mood of her music"). This could be because *Lost Highway* is based on a Film with a story that already existed. So she "had to obey some rules" for this composition.
+The comparison of Olga Neuwirths compositions *Bählamms Fest* and *Lost Highway* in valence and energy shows that *Lost Highway* is "much more" happier than *Bählamms Fest* (and her music in general - compare "The mood of her music"). This could be because *Lost Highway* is based on a film with a story that already existed. So she "had to obey some rules" for this composition.
 That she nonetheless put her character in this composition shows the comparison between her composed music for *Lost Highway* and the used music in the film *Lost Highway* by David Lynch (see "Lost Highway - comparison to "the original"")
 
 ### Lost Highway - comparison to "the original"
@@ -316,7 +314,7 @@ ggplotly(compare)
 
 Comparison between the playlist of her work of *Lost Highway* and a playlist based on the film music of *Lost Highway* by David Lynch - the focus is also on the valence of the songs which are used/composed for each work.
 
-This shows how she adds her personal character to a work that already exists. The valence is much more lower in her work.
+This shows how she adds her personal character to a work that already exists. The valence is much more lower in her work. What in the last tab looked actually really happy compared to *Bählamms Fest* is nonetheless very depressed. Especially compared to the original film music.
 
 ### Comparison of Chroma-, Cepsto-, Tempo- & Keygram
 
@@ -484,7 +482,7 @@ scene6 %>%
 
 This is a comparison of the Chroma-, Cepsto-, Tempo- & Keygram of the song with the lowest valence of the composition *Lost Highway* from Olga Neuwirth.
 
-These clearly show that the part around 150 sec. is different from the rest of the song. This is because these ~30 seconds are the only part where "clear" instrument sounds are used without a voice speaking over them. The rest of the song are kinda "out of space" noises and sounds which the -grams cannot handle properly (see "Tempograms - happy, sad & something inbetween")
+These clearly show that the part around 150 sec. is different from the rest of the song. This is because these ~30 sec. are the only part where "clear" instrument sounds are used without a voice speaking over them. The rest of the song are kinda "out of space" noises and sounds which the -grams cannot handle properly. It is the same problem as by the tempograms before. (see "Tempograms - happy, sad & something inbetween")
 
 The Keygram also shows that something happens in the song at ~50 sec. and ~130 sec. In this parts the song almost have no key. This is because in this sections there is only a voice to hear which holds on one single tone (almost no instruments). So I guess that this is not enough to identify a key.
 
@@ -527,9 +525,7 @@ ggplotly(song)
 
 ***
 
-This is a self-similarity matrice of the song with the lowest valence from Olga Neuwirths composition *Lost Highway* (the same song as the chromagram).
-
-Is there a possibility to put this, the cepstogram and the chromagram on one tab? I  wanted to add this self similarity matrice to the tab with the chromagram to compare them (cause I used the same song) and reduce my tabs. If I do so they overlap and only one is shown.
+This is the self-similarity matrice of the song with the lowest valence from Olga Neuwirths composition *Lost Highway*.
 
 ### Did you say something? - The voice of her music
 
@@ -571,7 +567,7 @@ goodnightmommy %>% mutate(mode = ifelse(mode == 0, 'Minor', 'Major')) %>% ggplot
 
 ***
 
-The plots compared to each other show clearly that the speechiness always follows the same structure. In each case there is exactly one outlier which is way more speechy than the other songs. Also the speechiness of these outliers and in general is almost the same in each composition except from *Goodnight Mommy*. But this exceptation makes sense because the first three compositions are for musical performances and *Goodnight Mommy* is a soundtrack album for a film.
+The plots compared to each other show clearly that the speechiness always follows the same structure. In each case there is exactly one outlier which is way more speechy than the other songs. Also the speechiness of these outliers and in general is almost the same in each composition except from *Goodnight Mommy*. But this exception makes sense because the first three compositions are for musical performances on stage and *Goodnight Mommy* is a soundtrack album for a film.
 
 The fact that the range 0.33 and 0.66 describes tracks that may contain both music and speech shows what I meant earlier (see "Tempo & Chaos - happy, sad & something inbetween"). She surely uses instruments but not in a "stereotypical" way. She 
 
@@ -591,17 +587,11 @@ For the liveness I have guessed that every song has to be in the range at least 
  
 ### Personality = Music?
 
-After a first look at Olga Neuwirths compositions with a focus on the energy and valence it becomes clear that the aspect of her depressed personality definitely shows up in her music. This also shows the comparison between her interpretation of *Lost Highway* and the original by David Lynch. Her music is much more depressed than the original film music.
+After analyzing her music in general and several compositions in detail it becomes clear that the aspect of her depressed personality definitely shows up in her music. This shows especially the comparison between her interpretation of Lost Highway and the original by David Lynch. Her music is much more depressed than the original film music. But also the plot with all her songs (from Spotify) shows this. The valence is very low in general. Much more lower than I expected. I knew that she is depressed but this low valence surprised me, nonetheless.
 
-But the depression is not the only strong aspect of her personality. She also is a very determined character which I also want to search in her music. For this aspect I have to take a look at other compositions and features to search for features which could represent the other aspects of her personality - this will be my next step! And with this I analyze and summarize her music in general and give it an own summarized character/personality.
+I hoped to find the determined character of hers in features like loud- and speechiness but I must admit that I would not say that these are showing this aspect of her character like the valence reflects her depression.
 
-#### To Do
-*   analyze her music on other features which could represent other             aspects of her personality
-*   plot the mean character of her music in general
-        + give this an own character/personality?
-            + compare this with her personality
-            
-### Different songs, same sound?
+But nonetheless I found something I was not looking for but I still admired in the seminar last semester: her compositions are so much well thought out. This is shown in her music scores where she also notes directions for the performers, sound and video engineers (it would be too much to describe this here but there are several aspects that fascinated me because they are so good thought out). Due this project her well thought out composing is clearly shown in the comparison of the loud- and speechiness of her compositions. Every composition follows almost the exact same pattern. The exception is *Goodnight Mommy* because this is a soundtrack album for a film. So this makes sense. The other three examples are for musical performances on stage. This fact and that the visualizations for these are looking so similar fascinating me again. I guess that she does not plot her songs before publishing them but it looks like this was intended to be compared and look like this. 
 
-The respond of the critique from my friend that "every song sounds the same" is that they definitely not. There are some structures she followed through her compositions.
+Additionally, I can say that her songs definitely are not sound the same. I listened to almost every song on Spotify due to this project. But this thinking also could be determined to individual perceptions and hearing habits which Olga Neuwirth wants to rearrange due confusion anyways. So I guess it is not that unusual that some would say that her music sounds the same. The same in confusing in any case. But this is what it makes her music and her in person so interesting. I also guess that this critique was on a personal aspect because I know that he does not like her music that much.
 *   try to get tables for the descriptions in the columns
